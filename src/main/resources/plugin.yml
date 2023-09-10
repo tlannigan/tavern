@@ -1,0 +1,4 @@
+name: Tavern
+version: '${version}'
+main: com.tlannigan.tavern.Tavern
+api-version: '${minecraftApiVersion}'
