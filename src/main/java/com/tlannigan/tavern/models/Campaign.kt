@@ -1,8 +1,6 @@
 package com.tlannigan.tavern.models
 
-import com.tlannigan.tavern.extensions.tavern
-import com.tlannigan.tavern.extensions.teleport
-import com.tlannigan.tavern.extensions.toTLocation
+import com.tlannigan.tavern.extensions.*
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -31,9 +29,9 @@ data class Campaign(
             if (isGameMaster(character.id)) {
                 startSession()
             }
-            player.sendMessage("Entering campaign $name.")
-            player.teleport(character.state.location)
             character.inSession = true
+            player.sendMessage("Entering campaign $name.")
+            player.updateState(character.state)
         }
     }
 
@@ -49,9 +47,10 @@ data class Campaign(
             if (isGameMaster(character.id)) {
                 endSession()
             }
-            player.sendMessage("Exiting campaign $name.")
-            player.teleport(player.tavern.state.location)
+            character.state = player.state
             character.inSession = false
+            player.sendMessage("Exiting campaign $name.")
+            player.updateState(player.tavern.state)
         }
     }
 

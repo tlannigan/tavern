@@ -23,7 +23,7 @@ data class TPlayer(
         campaigns.add(id)
     }
 
-    fun getCampaignsWithName(campaignName: String): List<Campaign> {
+    private fun getCampaignsWithName(campaignName: String): List<Campaign> {
         val campaignsWithName = mutableListOf<Campaign>()
         campaigns.forEach { campaignId ->
             val campaign = GameService.campaigns.get(campaignId)
@@ -34,19 +34,19 @@ data class TPlayer(
         return campaignsWithName
     }
 
-    fun hasCampaignWithName(campaignName: String): Boolean {
+    private fun hasCampaignWithName(campaignName: String): Boolean {
         return getCampaignsWithName(campaignName).isNotEmpty()
     }
 
-    fun hasActiveCampaign(): Boolean {
+    private fun hasActiveCampaign(): Boolean {
         return activeCampaign != null
     }
 
-    fun getActiveCampaign(): Campaign? {
+    private fun getActiveCampaign(): Campaign? {
         return activeCampaign?.let { GameService.campaigns.get(it) }
     }
 
-    fun saveOverworldState(state: PlayerState) {
+    private fun saveOverworldState(state: PlayerState) {
         this.state = state
     }
 
@@ -91,7 +91,7 @@ data class TPlayer(
             campaign.admit(player)
             this.activeCampaign = campaign.id
         } else if (campaigns.size > 1) {
-            // TODO("Send campaign options in chat with command buttons")
+            // TODO Send campaign options in chat with command buttons
         } else {
             player.sendMessage("Bad things happened if you got this message.")
         }

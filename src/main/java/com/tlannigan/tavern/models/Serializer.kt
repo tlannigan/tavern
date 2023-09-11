@@ -14,10 +14,10 @@ import java.io.IOException
 class Serializer {
 
     @Throws(IllegalStateException::class)
-    fun playerInventoryToBase64(inventory: PlayerInventory): Array<String> {
+    fun playerInventoryToBase64(inventory: PlayerInventory): List<String> {
         val content = toBase64(inventory)
         val armor = itemStackArrayToBase64(inventory.armorContents)
-        return arrayOf(content, armor)
+        return listOf(content, armor)
     }
 
     @Throws(IllegalStateException::class)
@@ -59,7 +59,7 @@ class Serializer {
     }
 
     @Throws(IOException::class)
-    fun fromBase64(string: String?): Inventory? {
+    fun fromBase64(string: String?): Inventory {
         return try {
             val inputStream = ByteArrayInputStream(Base64Coder.decodeLines(string))
             val dataInput = BukkitObjectInputStream(inputStream)
@@ -77,7 +77,7 @@ class Serializer {
     }
 
     @Throws(IOException::class)
-    fun itemStackArrayFromBase64(string: String?): Array<ItemStack?>? {
+    fun itemStackArrayFromBase64(string: String?): Array<ItemStack?> {
         return try {
             val inputStream = ByteArrayInputStream(Base64Coder.decodeLines(string))
             val dataInput = BukkitObjectInputStream(inputStream)
@@ -89,9 +89,16 @@ class Serializer {
 
             dataInput.close()
             items
-        } catch(e: ClassNotFoundException) {
+        } catch (e: ClassNotFoundException) {
             throw IOException("Unable to decode class type.", e)
         }
+    }
+
+    companion object {
+        val emptyInventoryBase64 = listOf(
+            "rO0ABXcEAAAAKXBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBw",
+            "rO0ABXcEAAAABHBwcHA="
+        )
     }
 
 }

@@ -35,9 +35,8 @@ object TavernCommand : Command {
 
     private val join =
         CommandAPICommand("join")
-            .withArguments(StringArgument("campaign"))
+            .withArguments(StringArgument("campaign_id"))
             .executesPlayer(PlayerCommandExecutor { _, _ ->
-                // TODO("Join command")
             })
 
     private val leave =

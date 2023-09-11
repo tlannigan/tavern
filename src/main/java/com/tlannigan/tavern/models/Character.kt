@@ -1,10 +1,10 @@
 package com.tlannigan.tavern.models
 
-import com.tlannigan.tavern.extensions.state
+import com.tlannigan.tavern.extensions.toTLocation
 import org.bukkit.entity.Player
 import java.util.*
 
-open class Character(
+data class Character(
     val id: UUID,
     var name: String,
     var state: PlayerState,
@@ -15,7 +15,12 @@ open class Character(
             return Character(
                 id = player.uniqueId,
                 name = if (!characterName.isNullOrBlank()) characterName else player.displayName().toString(),
-                state = player.state
+                state = PlayerState(
+                    health = 20.0,
+                    mana = 20,
+                    location = player.location.toTLocation(),
+                    inventory = Serializer.emptyInventoryBase64
+                )
             )
         }
     }

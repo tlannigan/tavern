@@ -4,5 +4,5 @@ data class PlayerState(
     val health: Double,
     val mana: Int,
     val location: TLocation,
-//    val inventory: Array<String>
+    val inventory: List<String>
 )
