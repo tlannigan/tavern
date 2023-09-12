@@ -15,7 +15,6 @@ version = "1.0-SNAPSHOT"
 val targetJavaVersion = 17
 val minecraftApiVersion = "1.20"
 val commandApiVersion = "9.1.0"
-val daggerVersion = "2.46.1"
 
 repositories {
     mavenCentral()
@@ -28,8 +27,13 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    testImplementation(kotlin("test"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+
+    // Testing
+    testImplementation(kotlin("test"))
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.9.0")
+    testImplementation("org.mockito:mockito-core:5.5.0")
 
     // MongoDB Kotlin
     implementation("org.mongodb:mongodb-driver-kotlin-coroutine:4.10.1")
@@ -48,6 +52,9 @@ dependencies {
 }
 
 tasks {
+    test {
+        useJUnitPlatform()
+    }
     processResources {
         val props = linkedMapOf(
             "version" to version,
